@@ -1,5 +1,7 @@
-/** Stylesheet for the JWB script.
+/***************************************************************************
+ * Stylesheet for the JWB script.
  *
+ * @licence
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -12,221 +14,351 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, aBoston, MA 02110-1301, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ * 
+ * Original author: [[:wikipedia:User:Joeytje50]]
  *
- * See [[User:Joeytje50/JWB.js]] for more information.
- */
+ * For attribution: //en.wikipedia.org/wiki/User:Joeytje50/JWB.css
+***************************************************************************/
 
-/* Apparently this is needed for the HTML5 tags in older browsers */
-section, footer, aside, nav, main, article {display: block;}
+/******* Fonts *******/
+@import url(https://tools-static.wmflabs.org/fontcdn/css?family=Roboto);
 
-/* Normalise body */
-html, body {
-	height: 100%;
-	padding: 0;
-	margin: 0;
-	background: white;
+/******* Apparently this is needed for the HTML5 tags in older browsers *******/
+section, footer, aside, nav, main, article {
+	display: block;
 }
-body:before, body:after {
+
+/******* Normalise body *******/
+html, body {
+	margin: 0;
+	background: #FFFFFF;
+	padding: 0;
+	height: 100%;
+}
+body {
+	overflow: auto;
+}
+body::before, body::after {
 	content: normal !important;
 }
 
-/* Styling for the panels */
+/***** Scrollbar (doesn't work on IE/FF) *****/
+::-webkit-scrollbar { /* Minimize. */
+	width: 1px;
+	height: 1px;
+}
+::-webkit-scrollbar-thumb { /* I like black. */
+	background: #000000;
+}
+::-webkit-scrollbar-track-piece {
+	background: transparent;
+}
 
+/******* Styling for the panels *******/
 body {
 	background: none !important;
-	font: 16px "Times New Roman";
-	line-height: 20px;
 	margin: 0 4px;
+	line-height: 20px;
+	font-size: 13px;
+	font-family: 'Roboto', 'Helvetica', 'Calibri', sans-serif;
 }
-
-hr {
-	margin: 0.15em 0;
-}
-
 #resultWindow {
 	resize: vertical;
-	height: 300px;
-	min-height: 300px !important; /*important to prevent inline styles from resizing to smaller sizes*/
-	border: 1px solid #555;
-	padding: 3px;
 	overflow: auto;
+	border: 1px solid #000000;
+	padding: 3px;
+	height: 270px; /* Formerly 300 (below too) but that doesn't fit my screen. */
+	min-height: 270px !important; /* important to prevent inline styles from resizing to smaller sizes */
 }
-#resultWindow * {resize: none;}
+tr[data-line]:not(.lineheader) {
+	cursor: pointer;
+}
 #inputsWindow {
-	height: 360px;
+	border-bottom: 1px solid #AAAAAA;
 	padding-bottom: 30px;
-	border-bottom: 1px solid #AAA;
+	height: 360px;
 }
-
 #inputsBox {
 	height: 100%;
 }
-#tabs {
-	width: 300px;
+#articleBox {
+	position: relative;
+	float: left;
+	margin-right: 5px;
 	height: 100%;
+	width: 200px;
+	z-index: 25;
+}
+[dir="rtl"] #articleBox {
+	float: right;
+	margin-right: unset;
+	margin-left: 5px;
+}
+#articleList {
+	word-break: break-all;
+}
+/* .firstpage { See JWB.highlight (.js line 614).
+	background-color: #7777FF;
+	color: #000000;
+} */
+#tabs {
+	position: relative;
 	float: left;
 	padding-top: 5px;
-	position: relative;
+	height: 100%;
+	width: 300px;
+}
+[dir="rtl"] #tabs {
+	float: right;
 }
 #editBox {
-	height: 100%;
 	position: relative;
 	margin-left: 510px;
 	padding-top: 1px;
-}
-#articleBox {
-	width: 200px;
 	height: 100%;
-	float: left;
-	margin-right: 5px;
-	position: relative;
-	z-index: 25;
 }
-
+[dir="rtl"] #editBox {
+	margin-left: unset;
+	margin-right: 510px;
+}
 #editBoxArea {
 	position: absolute;
-	z-index: 30;
+	resize: vertical;
 	top: 20px;
 	right: 0;
+	z-index: 30;
 }
 
-textarea {
-	width: 100%;
-	min-width: 100% !important; /*important to prevent inline styles from resizing to smaller sizes*/
-	height: 100%;
-	min-height: 100% !important;
-	padding: 1px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+#statusBar {
+	position: relative;
+	border: 1px solid #000000;
+	background: white;
+	padding: 0 3px;
+	height: 20px;
+	z-index: 20;
 }
+#status {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	white-space: nowrap;
+}
+#stats {
+	display: flex;
+	padding-top: 3px;
+}
+.statsLabel:not(:first-child) {
+	margin-left: 1em;
+}
+[dir="rtl"] .statsLabel:not(:first-child) {
+	margin-left: unset;
+	margin-right: 1em;
+}
+.statsNumber {
+	margin-left: 3px;
+}
+[dir="rtl"] .statsNumber {
+	margin-left: unset;
+	margin-right: 3px;
+}
+#statusLoader {
+	right: 7px;
+	bottom: 4px;
+}
+[dir="rtl"] #statusLoader {
+	right: 3px;
+}
+
+/******* Util/UX (buttons/loaders) *******/
 body.AutoWikiBrowser fieldset {
 	padding: 0 5px 5px;
 	line-height: inherit;
-	border: 1px solid #2F6FAB;
+	border: 1px solid #000000; /* Formerly 2F6FAB. */
 	margin: 2px 0;
 }
-legend {
-	padding: 0 5px;
-	font-size: 100%;
+fieldset:not(.pagelistFieldset) > legend::before {
+	content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBUAKiYj6BqHAAAAP0lEQVQY02NgGCLAk+ElgyduyR8Mhxh+YFfgzvCdoYOBgaGB4SeDLzadjVB2I8MPBg9U6QMMDUi8BoYDgz6cALJKDk/3LFwEAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA0LTIxVDAwOjQyOjM4KzAwOjAwuLxJ/QAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNC0yMVQwMDo0MjozOCswMDowMMnh8UEAAAAASUVORK5CYII=);
+	position: relative;
+	top: 3px;
+	margin-right: 3px;
+	height: 20px; /* Same with line-height. */
+}
+fieldset.collapsedFieldset:not(.pagelistFieldset) > legend::before {
+	content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCQYOCiEePsjiAAAAR0lEQVQY02NgGPTgAEMDEq+B4QCqtCfDD4ZGKLuR4QeDB7p+d4bvDJ0MDAyNDD8ZfLFZ4Mnwg+EQww8GT1wu8GR4iVtykAEAQdcOUbTq/YsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMDZUMTQ6MTA6MzMrMDA6MDC1Ob9VAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA5LTA2VDE0OjEwOjMzKzAwOjAwxGQH6QAAAABJRU5ErkJggg==);
+}
+[dir="rtl"] fieldset:not(.pagelistFieldset) > legend::before {
+	margin-right: unset;
+	margin-left: 3px;
+}
+textarea {
+	width: 100%;
+	min-width: 100% !important; /* important to prevent inline styles from resizing to smaller sizes */
+	height: 100%;
+	min-height: 100% !important;
+	padding: 3px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 1px solid #888888; /* Same color as tabs */
+}
+b {
+	font-size: 85%;
+	font-weight: bold;
+}
+hr {
+	margin: 0.15em 0;
+	border: 0;
+	height: 1px;
+	background-color: #a2a9b1;
+}
+input[type="text"], input[type="number"], select {
+	border-radius: 0 !important; /* No curves. */
+}
+input[type="checkbox"], input[type="radio"] {
+	margin: 0 !important;
 }
 button, .button {
-	background: #EEE; /* Old browsers */
-	background: -moz-linear-gradient(#EEE, #CCC, #DDD); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEE), color-stop(50%, #CCC), color-stop(100%, #DDD)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(#EEE, #CCC, #DDD); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(#EEE, #CCC, #DDD); /* Opera 11.10+ */
-	background: -ms-linear-gradient(#EEE, #CCC, #DDD); /* IE10+ */
-	background: linear-gradient(#EEE, #CCC, #DDD); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#CCCCCC',GradientType=0 ); /* IE6-9 */
-	border: 1px solid #999;
+	background: #EEEEEE; /* Old browsers */
+	background: -moz-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEEEEE), color-stop(50%, #CCCCCC), color-stop(100%, #DDDDDD)); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* Opera 11.10+ */
+	background: -ms-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* IE10+ */
+	background: linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#CCCCCC', GradientType=0); /* IE6-9 */
+	border: 1px solid #999999;
 	border-radius: 3px;
 	padding: 0 6px;
 	margin: 2px;
 	cursor: default;
-	color: #333;
+	color: #333333;
 	font: 13px/20px arial;
 	display: inline-block;
 }
 button:hover, .button:hover {
-	background: #DDF; /* Old browsers */
-	background: -moz-linear-gradient(#EEE, #CCF, #DDF); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEE), color-stop(50%, #CCF), color-stop(100%, #DDF)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(#EEE, #CCF, #DDF); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(#EEE, #CCF, #DDF); /* Opera 11.10+ */
-	background: -ms-linear-gradient(#EEE, #CCF, #DDF); /* IE10+ */
-	background: linear-gradient(#EEE, #CCF, #DDF); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEFF', endColorstr='#CCCCFF',GradientType=0 ); /* IE6-9 */
-	color: #333;
+	background: #DDDDFF; /* Old browsers */
+	background: -moz-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEEEEE), color-stop(50%, #CCCCFF), color-stop(100%, #DDDDFF)); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* Opera 11.10+ */
+	background: -ms-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* IE10+ */
+	background: linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEFF', endColorstr='#CCCCFF', GradientType=0); /* IE6-9 */
+	color: #333333;
 }
 button:active, .button:active {
-	background: #CCF; /* Old browsers */
-	background: -moz-linear-gradient(#CCF, #DDF, #EEE); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CCF), color-stop(50%, #DDF), color-stop(100%, #EEE)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(#CCF, #DDF, #EEE); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(#CCF, #DDF, #EEE); /* Opera 11.10+ */
-	background: -ms-linear-gradient(#CCF, #DDF, #EEE); /* IE10+ */
-	background: linear-gradient(#CCF, #DDF, #EEE); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCCCFF', endColorstr='#EEEEFF',GradientType=0 ); /* IE6-9 */
-	color: #333;
+	background: #CCCCFF; /* Old browsers */
+	background: -moz-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CCCCFF), color-stop(50%, #DDDDFF), color-stop(100%, #EEEEEE)); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* Opera 11.10+ */
+	background: -ms-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* IE10+ */
+	background: linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCCCFF', endColorstr='#EEEEFF', GradientType=0); /* IE6-9 */
+	color: #333333;
+}
+button, button:hover, button:active,
+.button, .button:hover, .button:active,
+input[type="checkbox"], input[type="radio"] { /* , select, option */
+	cursor: pointer;
+}
+[disabled], [class*="disabled"] {
+	cursor: not-allowed !important;
 }
 button[disabled], button[disabled]:hover, button[disabled]:active,
 .button.disabled, .button.disabled:hover, .button.disabled:active {
-	background: #EEE;
-	color: #000;
-	border: 1px solid #555;
+	background: #EEEEEE;
+	color: #000000;
+	border: 1px solid #555555;
 	opacity: 0.6;
 }
 .button input[type="file"] {
-    position: fixed;
-    top: -1000px;
+	position: fixed;
+	visibility: hidden;
 }
-
-#save:after {
-    content: " '" attr(value) "'";
-    font-style: italic;
+#articleList:focus, #editBoxArea:focus, #namespaceList:focus, #smwquery:focus, /* So as not to hide scroll bar. */
+input[type="text"]:focus, input[type="number"]:focus, select:focus { /* I'm tired with :focus { outline-color: #3366cc }. */
+	outline-style: solid;
+	outline-color: #000000;
+	outline-width: 1px;
 }
-
-#status {
-	border: 1px solid #555;
-	background: white;
-	padding: 0 3px;
+/* For attribution: //loading.io/css (CC0) */
+.loader-wrapper, .loader {
+	display: inline-block;
 	position: relative;
-	z-index: 20;
+}
+.loader .loader-items {
+	transform-origin: 40px 40px;
+}
+.loader .loader-items::after {
+	content: ' ';
+	display: block;
+	position: absolute;
+	top: 4px;
+	left: 36px;
+	width: 6px;
+	height: 18px;
+	border-radius: 20%;
+	background: #000000;
+}
+@keyframes loader {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
-/* Interface */
-
+/******* Interface *******/
 #tabs .JWBtabc {
 	display: none;
-	height: 100%;
-	border: 1px solid #888;
-	padding: 3px;
+	position: relative;
 	margin-top: -1px;
 	margin-bottom: -22px;
+	border: 1px solid #000000;
 	overflow: auto;
+	padding: 3px;
+	height: 100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	position: relative;
 }
 #tabs .JWBtabc.active {
 	display: block;
 }
-.JWBtabc .fullwidth {
-	width: 95%;
-	display: block;
-}
 .JWBtabc input[type="text"],
 .JWBtabc input[type="number"],
-.JWBpopup input[type="text"] {
-	border: 1px solid #BBB;
-	border-radius: 5px;
-	box-shadow: 1px 1px 3px;
+.JWBpopup input[type="text"],
+.JWBpopup input[type="number"] {
+	border: 1px solid #BBBBBB;
 	padding: 2px;
-	margin-bottom: 4px;
 }
-#replacesButton {
-	float: right;
-	margin-top: -25px;
+#tabholder {
+	display: flex;
+	justify-content: space-between;
 }
-#refreshRETF {
-	cursor: pointer;
+#tabholder div {
+	display: flex;
 }
-
-.tabholder {
-	position: relative;
+#tabholder > div:nth-child(1) > span:not(:first-child) {
+	margin-left: 3px;
+}
+[dir="rtl"] #tabholder > div:nth-child(1) > span:not(:first-child) {
+	margin-left: unset;
+	margin-right: 3px;
+}
+#tabholder > div:nth-child(2) > span:not(:last-child) {
+	margin-right: 3px;
+}
+[dir="rtl"] #tabholder > div:nth-child(2) > span:not(:last-child) {
+	margin-right: unset;
+	margin-left: 3px;
 }
 .JWBtab.log {
-	position: absolute;
-	right: 0;
 	font-weight: bold;
-}
-[dir="rtl"] .JWBtab.log {
-	right:auto;
-	left:0;
 }
 .JWBtabc.log {
 	padding-bottom: 1.5em;
@@ -237,128 +369,615 @@ button[disabled], button[disabled]:hover, button[disabled]:active,
 
 .JWBtab {
 	padding: 0 3px;
-	border: 1px solid #888;
+	border: 1px solid #000000;
 	border-radius: 3px 3px 0 0;
-	background: #FFF;
+	background: #FFFFFF;
 	cursor: pointer;
 	line-height: 20px;
 	display: inline-block;
 }
-.JWBtab:hover {background: #DDD;}
-.JWBtab:active {background: #BBB;}
+.JWBtab:hover {
+	background: #DDDDDD;
+}
+.JWBtab:active {
+	background: #BBBBBB;
+}
 .JWBtab.active {
-	background: #BBE;
-	border-bottom: 1px solid #BBE;
+	background: #BBBBEE;
+	border-bottom: 1px solid #BBBBEE;
 }
 
-.minorEdit {
+/******* Layout (Tabs/Popups) *******/
+
+/***** Common things *****/
+fieldset.disabled {
+	border: 1px solid #767676 !important;
+	opacity: 0.7;
+}
+fieldset > legend {
+	cursor: pointer;
+	padding: 0 5px;
+	font-size: 100%;
+}
+select option[value=""],
+select option[value="0"] {
+	font-style: italic;
+}
+.checkboxFlexCheckboxes > label[data-label="checkbox"],
+.radioFlexRadios > label[data-label="radio"],
+.JWBtabc[data-tab="3"] .radioFlex > label[data-label="radio"],
+.JWBtabc[data-tab="-2"] .readdLine > label {
+	flex-basis: calc(100% / 3);
+}
+label[data-label="checkbox"], label[data-label="radio"] {
+	display: inline-flex;
+}
+label[data-label="checkbox"] > input[type="checkbox"],
+label[data-label="radio"] > input[type="radio"] {
+	align-self: center;
+}
+.startstops {
+	display: flex;
+	float: right;
+}
+[dir="rtl"] .startstops {
+	float: left;
+}
+.JWBtabc[data-tab="2"] .startstops {
+	flex-direction: column;
+}
+.JWBtabc[data-tab="-1"] .startstops {
+	z-index: 100; /* So that stopLog won't stuck with reAdds */
+}
+.starts { /* #startbutton, #startOther, #startLog */
+	color: #008800;
+}
+.stops { /* #stopbutton, #stopOther, #stopLog */
+	color: #FF0000;
+}
+.regexswitch, .ignoreswitch {
+	display: flex;
+	align-items: center;
+}
+.regexswitch {
+	font-style: italic;
+}
+/* .re101 {
+	font-size: 70%;
+	vertical-align: super;
+	text-decoration: none;
+	border-bottom: 1px dotted #000000;
+	cursor: help;
+} */
+.regexFlagsLabel {
+	display: inline-flex;
+}
+.regexFlags, #containFlags {
+	margin-left: 5px;
+	margin-bottom: 0 !important;
+	padding: 0 2px !important;
+	width: 30px;
+}
+.flexBaseline { /* Labels for checkboxes. */
+	align-self: baseline;
+	margin-left: 3px;
+}
+[dir="rtl"] .flexBaseline {
+	margin-left: unset;
+	margin-right: 3px;
+}
+.flexCenter { /* Labels for inline inputs. */
+	align-self: center;
+}
+.flexStart { /* Label for block inputs. */
+	align-self: flex-start;
+}
+.divisorWrapper {
+	align-self: center;
+}
+.divisor {
+	margin-left: 5px;
+	border-left: 1px solid #AAAAAA;
+	padding-left: 5px;
+}
+.inputFlex {
+	display: flex;
+	justify-content: space-between;
+}
+.inputFlex > input[type="text"],
+.inputFlex > input[type="number"] {
+	margin: 2px 0;
+	width: 80%;
+}
+.fullwidthFlex {
+	display: flex;
+	flex-direction: column;
+}
+.fullwidth {
+	align-self: stretch;
+}
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+}
+#summaryLabel,
+#skipContainsLabel,
+#skipNotContainsLabel {
+	margin-bottom: 4px;
+}
+
+/***** Tabs *****/
+/*** Tab 1 ***/
+.JWBtabc[data-tab="1"] .collapsibleFieldset {
+	display: flex;
+	flex-direction: column;
+}
+#pagelist > .collapsibleFieldset > div,
+#settings > .collapsibleFieldset > div,
+#limits > .collapsibleFieldset > label,
+#removeDupesUniqsButtons, #articleListTopBot {
+	display: flex;
+	align-items: center;
+}
+#limits > .collapsibleFieldset > label {
+	justify-content: space-between;
+}
+
+#removeDupesUniqsButtons {
+	margin-left: 5px;
+}
+[dir="rtl"] #removeDupesUniqsButtons {
+	margin-left: unset;
+	margin-right: 5px;
+}
+#pagelistButton {
+	font-weight: bold;
+}
+
+#loadSettingsLabel {
+	display: inline-flex;
+	align-items: center;
+}
+#loadSettings {
+	align-self: stretch;
+	margin: 0 2px 0 5px;
+}
+[dir="rtl"] #loadSettings {
+	margin: 0 5px 0 2px;
+}
+#settings .withImage::after {
+	margin-left: 3px;
+}
+[dir="rtl"] #settings .withImage::after {
+	margin-left: unset;
+	margin-right: 3px;
+}
+#saveAs::after {
+	content: url('data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAMElEQVQY02NgQAX/GYgE5ClkRBNgxKWQkPH/WQgoZmRgYGBgIsaBLDjcw4DP4VgBAMy1CQeFLw4MAAAAAElFTkSuQmCC');
+}
+#updateSetups::after {
+	content: url('data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAJAQMAAAA1nf9tAAAABlBMVEVwAAAAAACuRbQOAAAAAXRSTlMAQObYZgAAABpJREFUeF5jkGFYxHCQ4SEDA0M7QzODK4MFACYrA+hkjEi+AAAAAElFTkSuQmCC');
+}
+#importLabel::after {
+	content: url('data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKAQMAAABcy+b9AAAABlBMVEVwAAAAAACuRbQOAAAAAXRSTlMAQObYZgAAAB1JREFUeF5j4GBgkGFgsGMAMV43MHTAUEMDw/8GAEkxB20iTmm8AAAAAElFTkSuQmCC');
+}
+#deleteSetup::after {
+	content: url('data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHAQMAAAD+nMWQAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABVJREFUeF5jOMbwjqGGwQKI3zEcAwAgNgSZRG9YDAAAAABJRU5ErkJggg==');
+}
+#saveToWiki::after {
+	content: url('data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAIAQMAAAARA0f2AAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAB9JREFUeF4FwLERADAEAMAfXTKDRmFQFUcYPknRPNYBP0QFRpaso0EAAAAASUVORK5CYII=');
+}
+#download::after {
+	content: url('data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKAQMAAABcy+b9AAAABlBMVEVwAAAAAACuRbQOAAAAAXRSTlMAQObYZgAAAB1JREFUeF5j4GCAotcNDB0NDPsaGOaAGQ0NDP8bAFrICG2BvdHlAAAAAElFTkSuQmCC');
+}
+#downloads {
+	display: none;
+}
+
+#limits input {
+	box-sizing: border-box;
+	margin: 2px 0;
+	padding-right: 22px;
+	width: 100px;
+	text-align: right;
+}
+#timelimitLabel, #sizelimitLabel {
+	position: relative;
+}
+#timelimitLabel::after,
+#sizelimitLabel::after {
 	position: absolute;
-	right: 8px;
+	bottom: 3px;
+	font-family: monospace, monospace;
+	font-style: italic;
+}
+#timelimitLabel::after,
+#sizelimitLabel::after {
+	right: 5px;
+}
+[dir="rtl"] #timelimitLabel::after,
+[dir="rtl"] #sizelimitLabel::after {
+	right: unset;
+	left: 81px;
+}
+#timelimitLabel::after {
+	content: 'ms';
+}
+#sizelimitLabel::after {
+	content: 'ch';
+}
+
+/*** Tab 2 ***/
+#minorEditLabel {
+	position: absolute;
+	right: 3px; /* 3px padding of section.JWBtabc. */
 	z-index: 5;
 }
-.editSummary {
-	position: relative;
-	display: inline-block;
-	width: 266px; /* 260px of #summary, plus 1px border each side, plus 2px padding each side */
+[dir="rtl"] #minorEditLabel {
+	right: unset;
+	left: 3px;
 }
-#summary {
-	display: inline-block;
-	width: 260px;
+#watchOption {
+	display: flex;
+	align-items: center;
+	margin-bottom: 4px;
+	width: 100%;
 }
+#watchPage {
+	align-self: stretch;
+	width: 100%; /* flex-wrap: nowrap; and white-space: pre; will take care of the rest*/
+}
+#watchNow {
+	margin: 0;
+	white-space: pre;
+}
+#throttleOption {
+	display: flex;
+	align-items: center;
+}
+#throttleLabel {
+	display: inline-flex;
+	align-items: center;
+}
+#throttle {
+	margin: 0 5px;
+	width: 30px;
+}
+/* 
 .viaJWB #summary {
-	width: 170px;
-	padding-right: 92px;
+	width: 100%;
+	padding-right: 92px; No .viaJWB::after, no padding-right
 }
-.viaJWB:after {
+.viaJWB::after {
 	content: " (via JWB)";
 	font-size: 12px;
 	position: absolute;
 	right: 0;
 	bottom: 5px;
-	background: #CCC;
+	background: #CCCCCC;
 	border-radius: 0 5px 5px 0;
 	padding-left: 3px;
 	width: 85px;
 }
-
+*/
+#mainButtons {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+}
+#mainButtons > div {
+	display: flex;
+	justify-content: center;
+}
 .editbutton {
-	padding: 10px;
+	flex-grow: 2;
 	margin: 2px;
-	font-size: 115%;
+	padding: 10px;
 	height: auto;
+	font-size: 115%;
 }
-
-.divisor {
-	margin-left: 5px;
-	padding-left: 5px;
-	border-left: 1px solid #AAA;
+#skipButton, #skipPage {
+	color: #AA3333;
 }
-
-#limits label {
-	display: block;
-	position: relative;
-	clear: right;
+#submitButton {
+	font-weight: bold;
+	color: #226622;
 }
-.timelimit-label::after {
-	content: "ms";
-	position: absolute;
-	bottom: 0;
-	right: 10px;
-    font-style: italic;
+#previewButton {
+	color: #3333FF;
 }
-#limits input {
-	width: 100px;
-	margin-right: 5px;
+#diffButton {
+	color: #BB6622;
+}
+#replacesButton {
 	float: right;
-	text-align: right;
-    box-sizing: border-box;
+	margin-top: -25px;
 }
-#timelimit {
-	padding-right: 25px;
+[dir="rtl"] #replacesButton {
+	float: left;
 }
 
+.JWBtabc[data-tab="2"] .replaceText,
+.JWBtabc[data-tab="2"] .replaceWith {
+	width: 200px;
+}
+
+#RETF {
+	display: inline-flex;
+	align-items: center;
+}
+#refreshRETF {
+	cursor: pointer;
+	align-self: center;
+	margin-left: 5px;
+}
+[dir="rtl"] #refreshRETF {
+	margin-left: unset;
+	margin-right: 5px;
+}
+#loadingRETF {
+	right: 5px;
+	bottom: 3.5px;
+}
+[dir="rtl"] #loadingRETF {
+	right: unset;
+	left: -3px;
+}
+#skipRETF {
+	display: none; /* JS overrides this when RETF is enabled */
+	margin-top: 0;
+	margin-left: 2em;
+}
+[dir="rtl"] #skipRETF {
+	margin-left: unset;
+	margin-right: 2em;
+}
+
+/*** Tab 3 ***/
+.JWBtabc[data-tab="3"] .radioFlex {
+	display: flex;
+	justify-content: space-between;
+}
+
+#skipContains, #skipNotContains, #skipCategories {
+	margin-bottom: 0;
+}
+
+/*** Tab 4 ***/
+.JWBtabc[data-tab="4"] button {
+	margin: 0 !important;
+}
+.otherOptionLabels {
+	display: flex;
+	justify-content: space-between;
+}
+.otherOptionLabels > select,
+.otherOptionLabels > input {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 2px 0;
+	width: 60%;
+}
+#movealsoOptions {
+	display: inline-flex;
+	float: right;
+	width: 60%;
+	justify-content: space-between;
+}
+#movealsoOptions > label {
+	flex-basis: calc(100% / 2);
+	justify-content: center;
+}
+#moveTo {
+	margin: 0;
+}
+.protectSelect {
+	width: 60%;
+}
+
+#rightGrantRevoke {
+	float: right;
+	display: inline-flex;
+	justify-content: flex-end;
+	align-items: stretch;
+}
+#rightSummary {
+	margin: 0 1px 0 0;
+}
+[dir="rtl"] #rightSummary {
+	margin: 0 0 0 1px;
+}
+#rightGrant, #rightRevoke {
+	font-family: monospace, monospace;
+}
+#otherButtons {
+	display: flex;
+	margin-top: 3px;
+	justify-content: space-between;
+}
+#movePage {
+	color: #226622;
+}
+#deletePage {
+	color: #FF0000;
+}
+#protectPage {
+	color: #0000FF;
+}
+
+/*** Tab -2 ***/
+.JWBtab[data-tab="-2"] .collapsibleFieldset,
+.readdLine {
+	display: flex;
+	justify-content: space-between;
+}
+.JWBtab[data-tab="-2"] .collapsibleFieldset {
+	flex-direction: column;
+}
+
+/*** Tab -1 ***/
+.JWBtabc[data-tab="-1"] button {
+	margin: 1px;
+}
+#logButtons {
+	display: flex;
+	justify-content: space-between;
+	top: 0;
+}
+#clearLogButtonYes, #clearLogButtonNo {
+	display: none;
+}
 #actionlog {
 	border-collapse: collapse;
 	margin-bottom: 25px;
+	table-layout: fixed;
+	word-wrap: break-word;
+	width: 100%;
 }
-#actionlog tr {
-	border: 1px #AAA solid;
+.tableRow {
+	border: 1px #AAAAAA solid;
+	font-size: 0.75em;
 }
-#actionlog td:last-child {
-	width: 85%;
+/* #actionlog td:last-child {
+	width: 10%;
+} */
+.timestampCell {
+	width: 15%;
+	text-align: center;
+	font-size: 0.75em;
+}
+.tableHeader {
+	width: 10%;
+}
+.pageNameCell {
+	width: 65%;
+}
+.extraInfoCell,
+.reAddButtonCell {
+	width: 10%;
+	text-align: center;
+}
+.reAddButton {
+	font-size: 0.75em;
+	padding: 0 0;
+	margin-right: 3px;
 }
 
-/* Layout */
-
-#stats {
-	padding-top: 3px;
+/***** Popup window *****/
+#overlay {
+	z-index: 40;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000000;
+	opacity: 0.3;
 }
-
-.regexFlags,
-#containFlags {
-	width: 30px;
+.JWBpopup {
+	position: fixed;
+	z-index: 50;
+	top: 10%;
+	left: 20%;
+	width: 60%;
+	height: 80%;
+	border: 2px solid #000000;
+	padding: 5px;
+	overflow: auto;
+	background: #EEEEEE;
 }
-.replaceText, .replaceWith {
-	width: 200px;
-	margin-right: 5px;
-	float: right;
+@media only screen and (max-width: 950px) {
+	.JWBpopup {
+		left: 10%;
+		width: 80%;
+	}
+}
+#moreReplaces {
+	top: 2px;
+	left: 2px;
+}
+#moreReplacesBorder {
+	border-bottom: 2px dashed #BBBBBB;
+	background-color: transparent;
+}
+#replacesPopup .replaces {
+	display: flex;
+	flex-direction: column;
+	margin-top: 4px;
+	margin-bottom: 5px;
+	border-bottom: 2px dashed #BBBBBB;
+}
+#replacesPopup .replaces.sortable {
+	cursor: grab;
+}
+#replacesPopup .replaces.sortable:active {
+	cursor: grabbing;
+}
+.fieldsetPlaceholder {
+	visibility: visible;
+	margin: 5px 0 4px;
+	border: 2px dashed #BBBBBB;
+	border-top: none;
+	height: 92px;
 }
 #replacesPopup .replaceText, #replacesPopup .replaceWith {
 	width: 80%;
-	width: calc(100% - 100px);
 }
-#replacesPopup .replaces {
-	border-bottom: 2px dashed #BBB;
-	margin-bottom: 5px;
+/* #replacesPopup .switches {
+	align-self: flex-end;
+	float: right;
+	height: 0;
+} */
+#replacesPopup .removeThis {
+	float: right;
+	margin: 0;
 }
-.replaces > label, .replaces > .regexswitch {
-	clear: both;
+[dir="rtl"] #replacesPopup .removeThis {
+	float: left;
 }
 
-#pagelistPopup fieldset > label {
-	display:block;
+#pagelistForm {
+	display: flex;
+	flex-direction: row-reverse;
+	position: relative;
+	padding-left: 5px;
+	/* padding-right: 195px; same as #ns-filter width + margin */
 }
-
+#namespaceFilter { /* Formerly #ns-filter. */
+	/* position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0; */
+	margin: 0 10px;
+	width: 175px;
+	text-align: center;
+}
+#namespaceList {
+	height: calc(100% - 20px); /* #ns-filter height - 20px label line-height. */
+	overflow: auto;
+}
+#pagelistFieldsets {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 3;
+}
+#pagelistPopup .inputFlex,
+#pagelistPopup .checkboxFlex,
+#pagelistPopup .radioFlex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+#pagelistPopup .checkboxFlexCheckboxes,
+#pagelistPopup .radioFlexRadios {
+	display: flex;
+	width: 80%; /* Similar to #pagelistPopup input[type="text"]. */
+	justify-content: space-between;
+}
+#rnlimit {
+	text-align: right;
+}
 .listSMW {
 	display: none;
 }
@@ -369,122 +988,12 @@ button[disabled], button[disabled]:hover, button[disabled]:active,
 	height: 3em;
 	padding: 2px;
 	resize: vertical;
+	max-height: 500px;
 }
-
-#watchPage {
-	width:150px;
+#pagelistLoader {
+	right: 9px;
+	bottom: 3px;
 }
-
-b {
-	font-size: 85%;
-	font-weight: bold;
-}
-.regexswitch {
-	font-style:italic;
-}
-.re101 {
-	font-size: 70%;
-	vertical-align: super;
-	text-decoration: none;
-	border-bottom: 1px dotted #000;
-	cursor: help;
-}
-
-#startstop {
-	float: right;
-}
-#startstop button {
-	margin: 2px;
-}
-
-#submitButton {font-weight:bold;color:#262;}
-#skipButton, #skipPage {color: #A33;}
-#previewButton {color:#33F;}
-#diffButton {color:#B62;}
-#stopbutton {color: #F00;}
-#startbutton {color: #080;}
-#deletePage {color: #F00;}
-#movePage {color: #262;}
-#protectPage {color: #00F;}
-
-#articleList {white-space: pre;}
-#articleList[disabled]:first-line {
-	background-color: #77F;
-	color: #000;
-}
-
-tr[data-line]:not(.lineheader) {cursor: pointer;}
-
-#pagelistButton {font-weight: bold;}
-
-#downloads {display: none;}
-#settings [id]:after {
-	margin-left: 3px;
-}
-#saveAs:after {
-	content: url("data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAMElEQVQY02NgQAX/GYgE5ClkRBNgxKWQkPH/WQgoZmRgYGBgIsaBLDjcw4DP4VgBAMy1CQeFLw4MAAAAAElFTkSuQmCC");
-}
-#saveToWiki:after {
-	content: url("data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAIAQMAAAARA0f2AAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAB9JREFUeF4FwLERADAEAMAfXTKDRmFQFUcYPknRPNYBP0QFRpaso0EAAAAASUVORK5CYII=");
-}
-#download:after {
-	content: url("data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKAQMAAABcy+b9AAAABlBMVEVwAAAAAACuRbQOAAAAAXRSTlMAQObYZgAAAB1JREFUeF5j4GCAotcNDB0NDPsaGOaAGQ0NDP8bAFrICG2BvdHlAAAAAElFTkSuQmCC");
-}
-#deleteSetup:after {
-	content: url("data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHAQMAAAD+nMWQAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABVJREFUeF5jOMbwjqGGwQKI3zEcAwAgNgSZRG9YDAAAAABJRU5ErkJggg==");
-}
-#importLabel:after {
-	content: url("data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKAQMAAABcy+b9AAAABlBMVEVwAAAAAACuRbQOAAAAAXRSTlMAQObYZgAAAB1JREFUeF5j4GBgkGFgsGMAMV43MHTAUEMDw/8GAEkxB20iTmm8AAAAAElFTkSuQmCC");
-}
-#updateSetups:after {
-	content: url("data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAJAQMAAAA1nf9tAAAABlBMVEVwAAAAAACuRbQOAAAAAXRSTlMAQObYZgAAABpJREFUeF5jkGFYxHCQ4SEDA0M7QzODK4MFACYrA+hkjEi+AAAAAElFTkSuQmCC");
-}
-
-/* Popup window */
-
-#overlay {
-	z-index: 40;
-	cursor: pointer;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: black;
-	opacity: 0.3;
-}
-
-.JWBpopup {
-	position: fixed;
-	z-index: 50;
-	top: 15%;
-	left: 25%;
-	width: 50%;
-	height: 70%;
-	border: 2px solid black;
-	padding: 5px;
-	overflow: auto;
-	background: #EEE;
-}
-
-#pagelistPopup form {
-	position: relative;
-	padding-right: 175px; /*same as #ns-filter width*/
-}
-fieldset[disabled] {
-	opacity: 0.7;
-}
-select option[value=""] {
-	font-style: italic;
-}
-#ns-filter {
-	position: absolute;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	width: 175px;
-	text-align: center;
-}
-#ns-filter select {
-	height: 100%;
+[dir="rtl"] #pagelistLoader {
+	right: unset;
 }
