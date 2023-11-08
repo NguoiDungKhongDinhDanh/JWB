@@ -1,9 +1,14 @@
-/**
- * Web Worker for AutoWikiBrowser script. Used to run certain tasks on a parallel process to be able to terminate it.
- * Idea from https://stackoverflow.com/a/66162733/1256925. Dirty hack workaround due to https://stackoverflow.com/q/66188950/1256925.
- * See https://en.wikipedia.org/wiki/User:Joeytje50/JWB.js for the full script, as well as licensing.
+/************************************************************************
+ * Web Worker for AutoWikiBrowser script. Used to run certain tasks on
+ * a parallel process to be able to terminate it.
+ * Idea from https://stackoverflow.com/a/66162733/1256925.
+ * Dirty hack workaround due to //stackoverflow.com/q/66188950/1256925.
+ * See https://en.wikipedia.org/wiki/User:Joeytje50/JWB.js for the full
+ * script, as well as licensing.
  * Licensed under GNU GPL 2. http://www.gnu.org/copyleft/gpl.html
- */
+ * 
+ * For attribution: [[:wikipedia:User:Joeytje50/JWB.js/worker.js]]
+************************************************************************/
 
 JWB.worker.function = function() {
 	var ret = {};

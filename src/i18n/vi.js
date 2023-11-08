@@ -14,7 +14,9 @@ JWB.messages.vi = {
 	'tab-log':					'NT',
 	'pagelist-caption':			'Danh sách trang:',
 	'editbox-caption':			'Khu vực sửa đổi',
-	'editbox-currentpage':		'Đang sửa: <a href="/wiki/$2" target="_blank" title="$1">$1</a>',
+	'editbox-currentpage':		'Đang sửa: <a href="' +
+								mw.config.get('wgArticlePath').replace(/\$1/, '$2') +
+								'" target="_blank" title="$1">$1</a>',
 	'no-changes-made':			'Không có sửa đổi. Nhấp bỏ qua để đến trang tiếp theo.',
 	'page-not-exists':			'Trang không tồn tại, không thể xem khác biệt.',
 	
@@ -38,11 +40,13 @@ JWB.messages.vi = {
 	'tip-preparse':				'Chạy dọc các trang, lọc ra trước những trang sẽ được bỏ qua.',
 	'preparse-reset':			'đặt lại',
 	'tip-preparse-reset':		'Xoá thẻ #PRE-PARSE-STOP để phân tích lại từ đầu.',
-	'button-pagelist-generate':	'Tạo danh sách',
+	'button-pagelist-generate':	'Tạo DS',
 	'button-pagelist-stop':		'Dừng',
 	'button-pagelist-top':		'Đầu',
 	'button-pagelist-bot':		'Cuối',
 	'button-sort':				'Xếp',
+	'button-filter':			'Lọc',
+	'button-filter-tip':		'Lọc danh sách trang và chuẩn hoá tên trang.',
 	'label-settings':			'Thiết lập',
 	'setup-store':				'Lưu',
 	'setup-store-tip':			'Lưu các thiết lập hiện có trong menu để truy cập lại sau.\n'+
@@ -87,6 +91,7 @@ JWB.messages.vi = {
 	'editbutton-diff':			'Khác',
 	'button-open-popup':		'Thêm trường khác',
 	'button-more-fields':		'Thêm trường mới',
+	'button-re101':				'Đến regex101.com',
 	'button-remove-this':		'Xoá trường',
 	'label-rtext':				'Thay:',
 	'label-rwith':				'Bằng:',
@@ -158,7 +163,17 @@ JWB.messages.vi = {
 	'readd-delete':				'Xoá',
 	'readd-undelete':			'Phục hồi',
 	'readd-protect':			'Khoá',
+	'readd-changed':			'Đã sửa',
+	'readd-nochanges':			'Không sửa',
+	'readd-all':				'Chọn tất cả',
+	'readd-search':				'Tìm kiếm:',
+	'readd-after':				'Sau:',
+	'readd-before':				'Trước:',
+	'readd-ab-enable':			'Kích hoạt',
 	'readd-button':				'Thêm',
+	'readd-preview':			'Xem trước',
+	'readd-clear':				'Dọn dẹp',
+	'readd-top':				'Đầu',
 	
 	// Tab -1
 	'log-clear':				'Dọn dẹp',
@@ -190,6 +205,7 @@ JWB.messages.vi = {
 	'csp-error':				'Không thể thực hiện tác vụ trước: Vi phạm Quy định Bảo mật Nội dung "$1".',
 	'confirm-continue':			'Tiếp tục?',
 	'right-revoke-confirm':		'Bạn sắp tự gỡ quyền $1 và không có khả năng hoàn tác tác vụ này. Xác nhận?',
+	'filter-no-namespace':		'Bạn không chọn không gian tên nào.',
 	
 	//Statuses
 	'status-alt':				'đang tải...',
@@ -224,7 +240,7 @@ JWB.messages.vi = {
 
 	//Setup
 	'setup-prompt':				'Bạn muốn $1 thiết lập hiện tại với tên nào?',
-	'setup-prompt-store':		'tải',
+	'setup-prompt-store':		'lưu',
 	'setup-prompt-save':		'lưu',
 	'setup-summary':			'Cập nhật thiết lập JWB /* bán tự động */',
 	'old-browser':				'Trình duyệt của bạn không hỗ trợ tải lên tập tin. Vui lòng cập nhật trình duyệt, '+
@@ -282,5 +298,16 @@ JWB.messages.vi = {
 	'placeholder-sr':			'Khuyên dùng: $1/example/ hoặc $2/example/',
 	'legend-smw':				'Truy vấn MediaWiki Ngữ nghĩa ($1)',
 	'smw-slow':					'chậm',
-	'label-smw':				'Nhập truy vấn MediaWiki Ngữ nghĩa. Đừng quên chỉ định giới hạn truy vấn, chẳng hạn như $1',
+	'label-smw':				'Truy vấn:',
+	'tip-smw':					'Nhập truy vấn MediaWiki Ngữ nghĩa. Đừng quên chỉ định giới hạn truy vấn, chẳng hạn như $1',
+	
+	// Pagelist filtering
+	'legend-filter-keep':		'Giữ',
+	'legend-filter-remove':		'Xoá',
+	'legend-filter-matrep':		'Tìm và thay',
+	'label-filter-search':		'Tìm:',
+	'legend-filter-convert':	'Chuyển đổi',
+	'label-filter-convert':		'Chuyển thành:',
+	'filter-convert-subject':	'Trang nội dung',
+	'filter-convert-talk':		'Trang thảo luận'
 };

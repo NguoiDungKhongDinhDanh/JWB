@@ -1,17 +1,9 @@
-// <nowiki>
-//This script functions as a small tool that makes it easy to perform typo fixes on any text using JavaScript.
-/**<nowiki>
- * Usage: See [[User:Joeytje50/RETF]].
-
-importScript('User:Joeytje50/RETF.js'); //backlink: [[User:Joeytje50/RETF.js]]
-RETF.replace(text);
-
- * This will perform all of the replacement rules on the Project:AutoWikiBrowser/Typos page on wiki it's run from
- * on the entered piece of text via the first argument.
- * To reload the typo list, simply run the following:
-
-RETF.load();
-
+/***************************************************************************
+ * This script functions as a small tool that makes it easy to perform typo
+ * fixes on any text using JavaScript. This will perform all of the
+ * replacement rules on the Project:AutoWikiBrowser/Typos page on wiki it's
+ * run from on the entered piece of text via the first argument.
+ * 
  * @licence
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,9 +19,11 @@ RETF.load();
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
- * @version 2.0.0
- * @author Joeytje50
- */
+ * 
+ * Original author: [[:wikipedia:User:Joeytje50]]
+ *
+ * For attribution: //en.wikipedia.org/wiki/User:Joeytje50/RETF.js
+***************************************************************************/
 
 window.RETF = {}; //making a main object to store everything else
 RETF.list = [];
@@ -94,4 +88,3 @@ RETF.replace = function(text) {
 };
 
 RETF.load();
-// </nowiki>

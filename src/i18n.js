@@ -53,7 +53,9 @@ JWB.messages.en = {
 	'tab-log':					'Log',
 	'pagelist-caption':			'Enter list of pages:',
 	'editbox-caption':			'Editing area',
-	'editbox-currentpage':		'You are editing: <a href="/wiki/$2" target="_blank" title="$1">$1</a>',
+	'editbox-currentpage':		'You are editing: <a href="' +
+								mw.config.get('wgArticlePath').replace(/\$1/, '$2') +
+								'" target="_blank" title="$1">$1</a>',
 	'no-changes-made':			'No changes made. Press skip to go to the next page in the list.',
 	'page-not-exists':			'Page doesn\'t exist, diff can not be made.',
 	
@@ -82,6 +84,8 @@ JWB.messages.en = {
 	'button-pagelist-top':		'Top',
 	'button-pagelist-bot':		'Bot',
 	'button-sort':				'Sort',
+	'button-filter':			'Filter',
+	'button-filter-tip':		'Filter the pagelist and standardize/localise the rest.',
 	'label-settings':			'Settings',
 	'setup-store':				'Store',
 	'setup-store-tip':			'Store the current settings in the dropdown menu, for later access.\n'+
@@ -127,6 +131,7 @@ JWB.messages.en = {
 	'editbutton-diff':			'Diff',
 	'button-open-popup':		'More replace fields',
 	'button-more-fields':		'Add more fields',
+	'button-re101':				'Go to regex101.com',
 	'button-remove-this':		'Remove',
 	'label-rtext':				'Replace:',
 	'label-rwith':				'With:',
@@ -197,7 +202,17 @@ JWB.messages.en = {
 	'readd-delete':				'Delete',
 	'readd-undelete':			'Undelete',
 	'readd-protect':			'Protect',
+	'readd-changed':			'Changed',
+	'readd-nochanges':			'No changes',
+	'readd-all':				'Check all',
+	'readd-search':				'Search:',
+	'readd-after':				'After:',
+	'readd-before':				'Before:',
+	'readd-ab-enable':			'Enable',
 	'readd-button':				'Readd',
+	'readd-preview':			'Preview',
+	'readd-clear':				'Clear',
+	'readd-top':				'top',
 	
 	// Tab -1
 	'log-clear':				'Clear',
@@ -223,13 +238,14 @@ JWB.messages.en = {
 	'verify-error':				'An error occurred while loading the AutoWikiBrowser checkpage:',
 	'new-message':				'You have new messages. See the status bar for links to view them.',
 	'no-pages-listed':			'Please enter some articles to browse before clicking start.',
-	'infinite-skip-notice':		"No replacement rules were specified, with JWB set to automatically skip when no changes are made.\n"+
-								"Please review these settings in the 'Content' and 'Skip' tabs.",
+	'infinite-skip-notice':		'No replacement rules were specified, with JWB set to automatically skip when no changes are made.\n'+
+								'Please review these settings in the "Content" and "Skip" tabs.',
 	'autosave-error':			'There was a problem while submitting the previous page. '+
-								"Please check the '$1' tab and verify if the previous edits went through correctly.",
+								'Please check the "$1" tab and verify if the previous edits went through correctly.',
 	'csp-error':				'Unable to perform previous action: violated Content Security Policy "$1".',
 	'confirm-continue':			'Continue?',
 	'right-revoke-confirm':		'You are about to revoke $1 user group from yourself, which you cannot undo. Continue?',
+	'filter-no-namespace':		'You did not choose any namespace to keep.',
 	
 	//Statuses
 	'status-alt':				'loading...',
@@ -256,7 +272,7 @@ JWB.messages.en = {
 	'status-setup-submit':		'Submitting settings to wiki...',
 	'status-setup-dload':		'Downloading settings...',
 	'status-old-browser':		'Please use $1 for importing.',
-	'status-del-setup':			"'$1' has been deleted. $2?",
+	'status-del-setup':			'\'$1\' has been deleted. $2?',
 	'status-del-default':		'Your default settings have been reset. $1?',
 	'status-del-undo':			'Undo',
 	'status-pl-over-lim':		'Server request limit reached.',
@@ -273,7 +289,7 @@ JWB.messages.en = {
 								'or modify the file extension if necessary.',
 	'json-err':					'An error was found in your JWB settings:\n$1\nPlease review your settings $2.',
 	'json-err-upload':			'file',
-	'json-err-page':			"by going to 'Special:MyPage/$1'",
+	'json-err-page':			'by going to "Special:MyPage/$1"',
 	'setup-delete-blank':		'You can\'t delete the blank setup.',
 	'duplicate-settings':		'Conflicting settings pages exist. Please move all settings from "$1" to "$2" and turn it into a redirect '+
 								'(see $3 for more information on JavaScript redirects).',
@@ -324,5 +340,16 @@ JWB.messages.en = {
 	'placeholder-sr':			'Recommended: $1/example/ or $2/example/',
 	'legend-smw':				'Semantic MediaWiki query (<i>$1</i>)', // $1 == 'smw-slow'
 	'smw-slow':					'slow',
-	'label-smw':				"Enter Semantic MediaWiki query here. Don't forget to specify a query limit, e.g.:$1", // $1 == "\n|limit=500"
+	'label-smw':				'Query:',
+	'tip-smw':					'Enter Semantic MediaWiki query here. Don\'t forget to specify a query limit, e.g.:$1', // $1 == "\n|limit=500"
+	
+	// Pagelist filtering
+	'legend-filter-keep':		'Keep',
+	'legend-filter-remove':		'Remove',
+	'legend-filter-matrep':		'Match and replace',
+	'label-filter-search':		'Search:',
+	'legend-filter-convert':	'Convert',
+	'label-filter-convert':		'Convert to:',
+	'filter-convert-subject':	'Subject pages',
+	'filter-convert-talk':		'Talk pages'
 };

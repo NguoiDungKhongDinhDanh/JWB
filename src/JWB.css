@@ -23,7 +23,7 @@
 ***************************************************************************/
 
 /******* Fonts *******/
-@import url(https://tools-static.wmflabs.org/fontcdn/css?family=Roboto);
+/* @import url(https://tools-static.wmflabs.org/fontcdn/css?family=Roboto); */
 
 /******* Apparently this is needed for the HTML5 tags in older browsers *******/
 section, footer, aside, nav, main, article {
@@ -33,7 +33,7 @@ section, footer, aside, nav, main, article {
 /******* Normalise body *******/
 html, body {
 	margin: 0;
-	background: #FFFFFF;
+	background: #fff;
 	padding: 0;
 	height: 100%;
 }
@@ -50,7 +50,7 @@ body::before, body::after {
 	height: 1px;
 }
 ::-webkit-scrollbar-thumb { /* I like black. */
-	background: #000000;
+	background: #000;
 }
 ::-webkit-scrollbar-track-piece {
 	background: transparent;
@@ -58,6 +58,8 @@ body::before, body::after {
 
 /******* Styling for the panels *******/
 body {
+	display: flex;
+	flex-direction: column;
 	background: none !important;
 	margin: 0 4px;
 	line-height: 20px;
@@ -65,34 +67,43 @@ body {
 	font-family: 'Roboto', 'Helvetica', 'Calibri', sans-serif;
 }
 #resultWindow {
-	resize: vertical;
+	flex-grow: 1;
+	/*resize: vertical;*/
+	border: 1px solid #000;
 	overflow: auto;
-	border: 1px solid #000000;
-	padding: 3px;
-	height: 270px; /* Formerly 300 (below too) but that doesn't fit my screen. */
+	padding: 0.5em;	
 	min-height: 270px !important; /* important to prevent inline styles from resizing to smaller sizes */
 }
 tr[data-line]:not(.lineheader) {
 	cursor: pointer;
 }
 #inputsWindow {
-	border-bottom: 1px solid #AAAAAA;
+	border-bottom: 1px solid #aaa;
 	padding-bottom: 30px;
-	height: 360px;
+	max-height: 355px;
+	min-height: 355px;
 }
 #inputsBox {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
 	height: 100%;
 }
+.boxLabel {
+	display: block;
+	padding: 0 0.2em 1px;
+	font-weight: bold;
+	font-size: 85%;
+}
 #articleBox {
-	position: relative;
-	float: left;
-	margin-right: 5px;
+	margin: 5px 5px 0 0;
 	height: 100%;
 	width: 200px;
+	min-width: 200px !important;
 	z-index: 25;
 }
 [dir="rtl"] #articleBox {
-	float: right;
 	margin-right: unset;
 	margin-left: 5px;
 }
@@ -100,40 +111,32 @@ tr[data-line]:not(.lineheader) {
 	word-break: break-all;
 }
 /* .firstpage { See JWB.highlight (.js line 614).
-	background-color: #7777FF;
-	color: #000000;
+	background-color: #77f;
+	color: #000;
 } */
 #tabs {
-	position: relative;
-	float: left;
-	padding-top: 5px;
+	margin: 5px 5px 0 0;
 	height: 100%;
 	width: 300px;
+	min-width: 300px;
 }
 [dir="rtl"] #tabs {
-	float: right;
+	margin-right: unset;
+	margin-left: 5px;
 }
 #editBox {
-	position: relative;
-	margin-left: 510px;
-	padding-top: 1px;
+	flex-grow: 1;
+	margin: 5px 0 0 0;
 	height: 100%;
 }
-[dir="rtl"] #editBox {
-	margin-left: unset;
-	margin-right: 510px;
-}
 #editBoxArea {
-	position: absolute;
 	resize: vertical;
-	top: 20px;
-	right: 0;
 	z-index: 30;
 }
 
 #statusBar {
 	position: relative;
-	border: 1px solid #000000;
+	border: 1px solid #000;
 	background: white;
 	padding: 0 3px;
 	height: 20px;
@@ -143,18 +146,18 @@ tr[data-line]:not(.lineheader) {
 	display: flex;
 	align-items: center;
 	overflow: hidden;
-	white-space: nowrap;
+	white-space: pre;
 }
 #stats {
 	display: flex;
 	padding-top: 3px;
 }
-.statsLabel:not(:first-child) {
-	margin-left: 1em;
-}
-[dir="rtl"] .statsLabel:not(:first-child) {
-	margin-left: unset;
+.statsLabel {
 	margin-right: 1em;
+}
+[dir="rtl"] .statsLabel {
+	margin-right: unset;
+	margin-left: 1em;
 }
 .statsNumber {
 	margin-left: 3px;
@@ -171,28 +174,57 @@ tr[data-line]:not(.lineheader) {
 	right: 3px;
 }
 
+/***** Catlinks (may come in handy) *****/
+/* For attribution: //en.wikipedia.org/w/load.php?lang=en&modules=skins.vector.styles.legacy&only=styles&skin=vector */
+/* .catlinks {
+	margin-top: 1em;
+	border: 1px solid #a2a9b1;
+	padding: 5px;
+	background-color: #f8f9fa;
+	clear: both;
+}
+.catlinks ul {
+	display: inline;
+	padding: 0;
+	list-style: none;
+}
+.catlinks li {
+	display: inline-block;
+	margin: 0.125em 0;
+	border-left: 1px solid #a2a9b1;
+	padding: 0 0.5em;
+	line-height: 1.25em;
+}
+.catlinks li:first-child {
+	border-left: 0;
+	padding-left: 0.25em;
+}
+.catlinks li a.mw-redirect {
+	font-style: italic;
+} */
+
 /******* Util/UX (buttons/loaders) *******/
-body.AutoWikiBrowser fieldset {
+body.JWB fieldset {
 	padding: 0 5px 5px;
 	line-height: inherit;
-	border: 1px solid #000000; /* Formerly 2F6FAB. */
+	border: 1px solid #000; /* Formerly 2F6FAB. */
 	margin: 2px 0;
 }
-fieldset:not(.pagelistFieldset) > legend::before {
+fieldset:not(.popupFieldset) > legend::before {
 	content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBUAKiYj6BqHAAAAP0lEQVQY02NgGCLAk+ElgyduyR8Mhxh+YFfgzvCdoYOBgaGB4SeDLzadjVB2I8MPBg9U6QMMDUi8BoYDgz6cALJKDk/3LFwEAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA0LTIxVDAwOjQyOjM4KzAwOjAwuLxJ/QAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNC0yMVQwMDo0MjozOCswMDowMMnh8UEAAAAASUVORK5CYII=);
 	position: relative;
-	top: 3px;
-	margin-right: 3px;
+	top: 2px;
+	margin-right: 5px;
 	height: 20px; /* Same with line-height. */
 }
-fieldset.collapsedFieldset:not(.pagelistFieldset) > legend::before {
+fieldset.collapsedFieldset:not(.popupFieldset) > legend::before {
 	content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCQYOCiEePsjiAAAAR0lEQVQY02NgGPTgAEMDEq+B4QCqtCfDD4ZGKLuR4QeDB7p+d4bvDJ0MDAyNDD8ZfLFZ4Mnwg+EQww8GT1wu8GR4iVtykAEAQdcOUbTq/YsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMDZUMTQ6MTA6MzMrMDA6MDC1Ob9VAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA5LTA2VDE0OjEwOjMzKzAwOjAwxGQH6QAAAABJRU5ErkJggg==);
 }
-[dir="rtl"] fieldset:not(.pagelistFieldset) > legend::before {
+[dir="rtl"] fieldset:not(.popupFieldset) > legend::before {
 	margin-right: unset;
-	margin-left: 3px;
+	margin-left: 5px;
 }
-textarea {
+textarea:not(.replaceText):not(.replaceWith):not(#smwquery) {
 	width: 100%;
 	min-width: 100% !important; /* important to prevent inline styles from resizing to smaller sizes */
 	height: 100%;
@@ -201,87 +233,87 @@ textarea {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #888888; /* Same color as tabs */
-}
-b {
-	font-size: 85%;
-	font-weight: bold;
+	border: 1px solid #888; /* Same color as tabs */
 }
 hr {
 	margin: 0.15em 0;
-	border: 0;
+	border-width: 0;
 	height: 1px;
-	background-color: #a2a9b1;
+	background-color: #A2A9B1;
 }
-input[type="text"], input[type="number"], select {
+input[type="text"], input[type="number"],
+input[type="datetime-local"], select {
 	border-radius: 0 !important; /* No curves. */
 }
 input[type="checkbox"], input[type="radio"] {
 	margin: 0 !important;
 }
 button, .button {
-	background: #EEEEEE; /* Old browsers */
-	background: -moz-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEEEEE), color-stop(50%, #CCCCCC), color-stop(100%, #DDDDDD)); /* Chrome, Safari4+ */
-	background: -webkit-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* Chrome10+, Safari5.1+ */
-	background: -o-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* Opera 11.10+ */
-	background: -ms-linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* IE10+ */
-	background: linear-gradient(#EEEEEE, #CCCCCC, #DDDDDD); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#CCCCCC', GradientType=0); /* IE6-9 */
-	border: 1px solid #999999;
+	background: #eee; /* Old browsers */
+	background: -moz-linear-gradient(#eee, #eee, #eee); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eee), color-stop(50%, #ccc), color-stop(100%, #ddd)); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(#eee, #ccc, #ddd); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(#eee, #ccc, #ddd); /* Opera 11.10+ */
+	background: -ms-linear-gradient(#eee, #ccc, #ddd); /* IE10+ */
+	background: linear-gradient(#eee, #ccc, #ddd); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eee', endColorstr='#ccc', GradientType=0); /* IE6-9 */
+	border: 1px solid #999;
 	border-radius: 3px;
 	padding: 0 6px;
 	margin: 2px;
 	cursor: default;
-	color: #333333;
+	color: #333;
 	font: 13px/20px arial;
 	display: inline-block;
 }
 button:hover, .button:hover {
-	background: #DDDDFF; /* Old browsers */
-	background: -moz-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEEEEE), color-stop(50%, #CCCCFF), color-stop(100%, #DDDDFF)); /* Chrome, Safari4+ */
-	background: -webkit-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* Chrome10+, Safari5.1+ */
-	background: -o-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* Opera 11.10+ */
-	background: -ms-linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* IE10+ */
-	background: linear-gradient(#EEEEEE, #CCCCFF, #DDDDFF); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEFF', endColorstr='#CCCCFF', GradientType=0); /* IE6-9 */
-	color: #333333;
+	background: #ddf; /* Old browsers */
+	background: -moz-linear-gradient(#eee, #ccf, #ddf); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eee), color-stop(50%, #ccf), color-stop(100%, #ddf)); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(#eee, #ccf, #ddf); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(#eee, #ccf, #ddf); /* Opera 11.10+ */
+	background: -ms-linear-gradient(#eee, #ccf, #ddf); /* IE10+ */
+	background: linear-gradient(#eee, #ccf, #ddf); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eef', endColorstr='#ccf', GradientType=0); /* IE6-9 */
+	color: #333;
 }
 button:active, .button:active {
-	background: #CCCCFF; /* Old browsers */
-	background: -moz-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CCCCFF), color-stop(50%, #DDDDFF), color-stop(100%, #EEEEEE)); /* Chrome, Safari4+ */
-	background: -webkit-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* Chrome10+, Safari5.1+ */
-	background: -o-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* Opera 11.10+ */
-	background: -ms-linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* IE10+ */
-	background: linear-gradient(#CCCCFF, #DDDDFF, #EEEEEE); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCCCFF', endColorstr='#EEEEFF', GradientType=0); /* IE6-9 */
-	color: #333333;
+	background: #ccf; /* Old browsers */
+	background: -moz-linear-gradient(#ccf, #ddf, #eee); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccf), color-stop(50%, #ddf), color-stop(100%, #eee)); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(#ccf, #ddf, #eee); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(#ccf, #ddf, #eee); /* Opera 11.10+ */
+	background: -ms-linear-gradient(#ccf, #ddf, #eee); /* IE10+ */
+	background: linear-gradient(#ccf, #ddf, #eee); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccf', endColorstr='#eef', GradientType=0); /* IE6-9 */
+	color: #333;
 }
 button, button:hover, button:active,
 .button, .button:hover, .button:active,
-input[type="checkbox"], input[type="radio"] { /* , select, option */
+input[type="checkbox"], input[type="checkbox"] + .checkboxLabel,
+input[type="radio"], input[type="radio"] + .radioLabel { /* , select, option */
 	cursor: pointer;
 }
-[disabled], [class*="disabled"] {
+[disabled], [class*="disabled"],
+[disabled] + span, [class*="disabled"] + span {
 	cursor: not-allowed !important;
 }
 button[disabled], button[disabled]:hover, button[disabled]:active,
 .button.disabled, .button.disabled:hover, .button.disabled:active {
-	background: #EEEEEE;
-	color: #000000;
-	border: 1px solid #555555;
+	background: #eee;
+	color: #000;
+	border: 1px solid #555;
 	opacity: 0.6;
 }
 .button input[type="file"] {
 	position: fixed;
 	visibility: hidden;
 }
-#articleList:focus, #editBoxArea:focus, #namespaceList:focus, #smwquery:focus, /* So as not to hide scroll bar. */
-input[type="text"]:focus, input[type="number"]:focus, select:focus { /* I'm tired with :focus { outline-color: #3366cc }. */
+textarea:focus, /* So as not to hide scroll bars. */
+input[type="text"]:focus, input[type="number"]:focus,
+input[type="datetime-local"]:focus, select:focus { /* I'm tired with :focus { outline-color: #36c }. */
 	outline-style: solid;
-	outline-color: #000000;
+	outline-color: #000;
 	outline-width: 1px;
 }
 /* For attribution: //loading.io/css (CC0) */
@@ -301,7 +333,7 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { /* I'm tire
 	width: 6px;
 	height: 18px;
 	border-radius: 20%;
-	background: #000000;
+	background: #000;
 }
 @keyframes loader {
 	0% {
@@ -318,23 +350,28 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { /* I'm tire
 	position: relative;
 	margin-top: -1px;
 	margin-bottom: -22px;
-	border: 1px solid #000000;
-	overflow: auto;
-	padding: 3px;
-	height: 100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	border: 1px solid #000;
+	overflow: auto;
+	height: 100%;
+	padding: 3px 3px 25px;
 }
 #tabs .JWBtabc.active {
 	display: block;
 }
 .JWBtabc input[type="text"],
 .JWBtabc input[type="number"],
+.JWBtabc input[type="datetime-local"],
 .JWBpopup input[type="text"],
-.JWBpopup input[type="number"] {
-	border: 1px solid #BBBBBB;
+.JWBpopup input[type="number"],
+.replaceText, .replaceWith {
+	border: 1px solid #bbb;
 	padding: 2px;
+}
+.replaceText, .replaceWith {
+	font-family: monospace, monospace;
 }
 #tabholder {
 	display: flex;
@@ -343,48 +380,59 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { /* I'm tire
 #tabholder div {
 	display: flex;
 }
-#tabholder > div:nth-child(1) > span:not(:first-child) {
+#tabholder div[data-nav] {
+	display: none;
+}
+#tabholder div[data-nav].active {
+	display: flex;
+}
+#tabholder > div:first-child span:not(:first-child) {
 	margin-left: 3px;
 }
-[dir="rtl"] #tabholder > div:nth-child(1) > span:not(:first-child) {
+[dir="rtl"] #tabholder > div:first-child span:not(:first-child) {
 	margin-left: unset;
 	margin-right: 3px;
 }
-#tabholder > div:nth-child(2) > span:not(:last-child) {
+#tabholder > div:last-child span:not(:last-child) {
 	margin-right: 3px;
 }
-[dir="rtl"] #tabholder > div:nth-child(2) > span:not(:last-child) {
+[dir="rtl"] #tabholder > div:last-child span:not(:last-child) {
 	margin-right: unset;
 	margin-left: 3px;
+}
+#zero img {
+	height: 15px;
+	width: 15px;
+	aspect-ratio: 1 / 1;
 }
 .JWBtab.log {
 	font-weight: bold;
 }
 .JWBtabc.log {
-	padding-bottom: 1.5em;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	padding-bottom: 1.5em;
 }
 
 .JWBtab {
 	padding: 0 3px;
-	border: 1px solid #000000;
+	border: 1px solid #000;
 	border-radius: 3px 3px 0 0;
-	background: #FFFFFF;
+	background: #fff;
 	cursor: pointer;
 	line-height: 20px;
 	display: inline-block;
 }
 .JWBtab:hover {
-	background: #DDDDDD;
+	background: #ddd;
 }
 .JWBtab:active {
-	background: #BBBBBB;
+	background: #bbb;
 }
 .JWBtab.active {
-	background: #BBBBEE;
-	border-bottom: 1px solid #BBBBEE;
+	background: #bbe;
+	border-bottom: 1px solid #bbe;
 }
 
 /******* Layout (Tabs/Popups) *******/
@@ -403,14 +451,18 @@ select option[value=""],
 select option[value="0"] {
 	font-style: italic;
 }
-.checkboxFlexCheckboxes > label[data-label="checkbox"],
-.radioFlexRadios > label[data-label="radio"],
-.JWBtabc[data-tab="3"] .radioFlex > label[data-label="radio"],
+.tripleCheckboxCheckboxes > label[data-label="checkbox"],
+.tripleRadioRadios > label[data-label="radio"],
+.JWBtabc[data-tab="3"] .tripleRadio > label[data-label="radio"],
 .JWBtabc[data-tab="-2"] .readdLine > label {
 	flex-basis: calc(100% / 3);
 }
+.doubleCheckboxCheckboxes > label[data-label="checkbox"],
+.doubleRadioRadios > label[data-label="radio"] {
+	flex-basis: calc(100% / 2);
+}
 label[data-label="checkbox"], label[data-label="radio"] {
-	display: inline-flex;
+	display: flex;
 }
 label[data-label="checkbox"] > input[type="checkbox"],
 label[data-label="radio"] > input[type="radio"] {
@@ -418,22 +470,15 @@ label[data-label="radio"] > input[type="radio"] {
 }
 .startstops {
 	display: flex;
-	float: right;
-}
-[dir="rtl"] .startstops {
-	float: left;
 }
 .JWBtabc[data-tab="2"] .startstops {
 	flex-direction: column;
 }
-.JWBtabc[data-tab="-1"] .startstops {
-	z-index: 100; /* So that stopLog won't stuck with reAdds */
-}
 .starts { /* #startbutton, #startOther, #startLog */
-	color: #008800;
+	color: #080;
 }
 .stops { /* #stopbutton, #stopOther, #stopLog */
-	color: #FF0000;
+	color: #f00;
 }
 .regexswitch, .ignoreswitch {
 	display: flex;
@@ -446,46 +491,47 @@ label[data-label="radio"] > input[type="radio"] {
 	font-size: 70%;
 	vertical-align: super;
 	text-decoration: none;
-	border-bottom: 1px dotted #000000;
+	border-bottom: 1px dotted #000;
 	cursor: help;
 } */
 .regexFlagsLabel {
-	display: inline-flex;
+	display: flex;
 }
-.regexFlags, #containFlags {
+.regexFlagsLabel input[type="text"] {
 	margin-left: 5px;
 	margin-bottom: 0 !important;
 	padding: 0 2px !important;
 	width: 30px;
 }
-.flexBaseline { /* Labels for checkboxes. */
-	align-self: baseline;
+.checkboxLabel, .radioLabel { /* Labels for checkboxes. */
 	margin-left: 3px;
 }
-[dir="rtl"] .flexBaseline {
+[dir="rtl"] .checkboxLabel,
+[dir="rtl"] .radioLabel {
 	margin-left: unset;
 	margin-right: 3px;
 }
 .flexCenter { /* Labels for inline inputs. */
 	align-self: center;
 }
-.flexStart { /* Label for block inputs. */
+.flexStart { /* Labels for block inputs. */
 	align-self: flex-start;
 }
 .divisorWrapper {
 	align-self: center;
 }
 .divisor {
-	margin-left: 5px;
-	border-left: 1px solid #AAAAAA;
-	padding-left: 5px;
+	margin: 0 5px;
+	border-left: 1px solid #aaa;
 }
-.inputFlex {
-	display: flex;
-	justify-content: space-between;
+.floatLabel { /* #minorEditLabel */
+	position: absolute;
+	z-index: 5;
 }
+.inputFlex > textarea,
 .inputFlex > input[type="text"],
-.inputFlex > input[type="number"] {
+.inputFlex > input[type="number"],
+.inputFlex > input[type="datetime-local"] {
 	margin: 2px 0;
 	width: 80%;
 }
@@ -499,10 +545,9 @@ label[data-label="radio"] > input[type="radio"] {
 .sticky {
 	position: -webkit-sticky;
 	position: sticky;
+	z-index: 100; /* So that stopLog won't stuck with readds */
 }
-#summaryLabel,
-#skipContainsLabel,
-#skipNotContainsLabel {
+.fullwidthFlex:not(:last-child) {
 	margin-bottom: 4px;
 }
 
@@ -515,7 +560,9 @@ label[data-label="radio"] > input[type="radio"] {
 #pagelist > .collapsibleFieldset > div,
 #settings > .collapsibleFieldset > div,
 #limits > .collapsibleFieldset > label,
-#removeDupesUniqsButtons, #articleListTopBot {
+#removeDupesUniqsButtons,
+#articleListTopBot,
+#articleListSortFilter {
 	display: flex;
 	align-items: center;
 }
@@ -535,7 +582,7 @@ label[data-label="radio"] > input[type="radio"] {
 }
 
 #loadSettingsLabel {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 }
 #loadSettings {
@@ -588,8 +635,8 @@ label[data-label="radio"] > input[type="radio"] {
 #sizelimitLabel::after {
 	position: absolute;
 	bottom: 3px;
-	font-family: monospace, monospace;
 	font-style: italic;
+	font-family: monospace, monospace;
 }
 #timelimitLabel::after,
 #sizelimitLabel::after {
@@ -609,9 +656,7 @@ label[data-label="radio"] > input[type="radio"] {
 
 /*** Tab 2 ***/
 #minorEditLabel {
-	position: absolute;
-	right: 3px; /* 3px padding of section.JWBtabc. */
-	z-index: 5;
+	right: 4px; /* 3px padding of section.JWBtabc + 1px. */
 }
 [dir="rtl"] #minorEditLabel {
 	right: unset;
@@ -621,11 +666,11 @@ label[data-label="radio"] > input[type="radio"] {
 	display: flex;
 	align-items: center;
 	margin-bottom: 4px;
-	width: 100%;
 }
 #watchPage {
+	flex-grow: 1;
 	align-self: stretch;
-	width: 100%; /* flex-wrap: nowrap; and white-space: pre; will take care of the rest*/
+	font-size: 0.95em;
 }
 #watchNow {
 	margin: 0;
@@ -636,7 +681,7 @@ label[data-label="radio"] > input[type="radio"] {
 	align-items: center;
 }
 #throttleLabel {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 }
 #throttle {
@@ -650,66 +695,75 @@ label[data-label="radio"] > input[type="radio"] {
 }
 .viaJWB::after {
 	content: " (via JWB)";
-	font-size: 12px;
 	position: absolute;
 	right: 0;
 	bottom: 5px;
-	background: #CCCCCC;
 	border-radius: 0 5px 5px 0;
+	background: #ccc;
 	padding-left: 3px;
 	width: 85px;
+	font-size: 12px;
 }
 */
+
+#buttonsArea {
+	display: flex;
+	justify-content: space-between;
+}
 #mainButtons {
 	display: flex;
 	flex-direction: column;
-	width: fit-content;
 }
 #mainButtons > div {
 	display: flex;
 	justify-content: center;
 }
 .editbutton {
-	flex-grow: 2;
+	flex-grow: 1;
 	margin: 2px;
 	padding: 10px;
 	height: auto;
 	font-size: 115%;
 }
 #skipButton, #skipPage {
-	color: #AA3333;
+	color: #a33;
 }
 #submitButton {
+	color: #262;
 	font-weight: bold;
-	color: #226622;
 }
 #previewButton {
-	color: #3333FF;
+	color: #33f;
 }
 #diffButton {
-	color: #BB6622;
+	color: #b62;
 }
-#replacesButton {
-	float: right;
-	margin-top: -25px;
-}
-[dir="rtl"] #replacesButton {
-	float: left;
+#buttonsArea > div:last-child {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: space-between;
 }
 
 .JWBtabc[data-tab="2"] .replaceText,
 .JWBtabc[data-tab="2"] .replaceWith {
 	width: 200px;
+	max-height: 1.5em;
+	height: 1.5em;
+	min-height: 1.5em;
 }
 
 #RETF {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 }
 #refreshRETF {
 	cursor: pointer;
 	align-self: center;
-	margin-left: 5px;
+	margin-left: 6px;
+	height: 10px;
+	width: 10px;
+	aspect-ratio: 1 / 1;
 }
 [dir="rtl"] #refreshRETF {
 	margin-left: unset;
@@ -717,7 +771,7 @@ label[data-label="radio"] > input[type="radio"] {
 }
 #loadingRETF {
 	right: 5px;
-	bottom: 3.5px;
+	bottom: 3px;
 }
 [dir="rtl"] #loadingRETF {
 	right: unset;
@@ -734,13 +788,9 @@ label[data-label="radio"] > input[type="radio"] {
 }
 
 /*** Tab 3 ***/
-.JWBtabc[data-tab="3"] .radioFlex {
+.JWBtabc[data-tab="3"] .tripleRadio {
 	display: flex;
 	justify-content: space-between;
-}
-
-#skipContains, #skipNotContains, #skipCategories {
-	margin-bottom: 0;
 }
 
 /*** Tab 4 ***/
@@ -758,9 +808,10 @@ label[data-label="radio"] > input[type="radio"] {
 	box-sizing: border-box;
 	margin: 2px 0;
 	width: 60%;
+	padding: 2px;
 }
 #movealsoOptions {
-	display: inline-flex;
+	display: flex;
 	float: right;
 	width: 60%;
 	justify-content: space-between;
@@ -772,13 +823,10 @@ label[data-label="radio"] > input[type="radio"] {
 #moveTo {
 	margin: 0;
 }
-.protectSelect {
-	width: 60%;
-}
 
 #rightGrantRevoke {
 	float: right;
-	display: inline-flex;
+	display: flex;
 	justify-content: flex-end;
 	align-items: stretch;
 }
@@ -797,13 +845,13 @@ label[data-label="radio"] > input[type="radio"] {
 	justify-content: space-between;
 }
 #movePage {
-	color: #226622;
+	color: #262;
 }
 #deletePage {
-	color: #FF0000;
+	color: #f00;
 }
 #protectPage {
-	color: #0000FF;
+	color: #00f;
 }
 
 /*** Tab -2 ***/
@@ -815,6 +863,32 @@ label[data-label="radio"] > input[type="radio"] {
 .JWBtab[data-tab="-2"] .collapsibleFieldset {
 	flex-direction: column;
 }
+#readd-allLabel {
+	right: 10px; /* Don't know why is that. */
+}
+[dir="rtl"] #readd-allLabel {
+	right: unset;
+	left: 10px;
+}
+.readd-ab {
+	display: flex;
+	justify-content: space-between;
+}
+#readd-after, #readd-before {
+	font-size: 0.9em;
+	font-family: inherit;
+}
+#readdButtons {
+	display: flex;
+	justify-content: space-between;
+	top: 0;
+}
+#readdButtons div {
+	display: flex;
+}
+#readdPreviewArea {
+	margin-bottom: 25px;
+}
 
 /*** Tab -1 ***/
 .JWBtabc[data-tab="-1"] button {
@@ -824,44 +898,48 @@ label[data-label="radio"] > input[type="radio"] {
 	display: flex;
 	justify-content: space-between;
 	top: 0;
+	margin-bottom: 3px;
+}
+#clearLog {
+	display: flex;
 }
 #clearLogButtonYes, #clearLogButtonNo {
 	display: none;
 }
 #actionlog {
 	border-collapse: collapse;
-	margin-bottom: 25px;
 	table-layout: fixed;
 	word-wrap: break-word;
 	width: 100%;
 }
 .tableRow {
-	border: 1px #AAAAAA solid;
+	border: 1px solid #aaa;
 	font-size: 0.75em;
 }
 /* #actionlog td:last-child {
 	width: 10%;
 } */
+.timestampCell, .actionCell,
+.extraInfoCell, .readdButtonCell {
+	text-align: center;
+}
 .timestampCell {
 	width: 15%;
-	text-align: center;
+	line-height: 1em;
 	font-size: 0.75em;
 }
-.tableHeader {
+.actionCell {
 	width: 10%;
 }
 .pageNameCell {
-	width: 65%;
+	width: 55%;
 }
 .extraInfoCell,
-.reAddButtonCell {
+.readdButtonCell {
 	width: 10%;
-	text-align: center;
 }
-.reAddButton {
-	font-size: 0.75em;
-	padding: 0 0;
-	margin-right: 3px;
+.readdButton {
+	font-family: monospace, monospace;
 }
 
 /***** Popup window *****/
@@ -872,7 +950,7 @@ label[data-label="radio"] > input[type="radio"] {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #000000;
+	background: #000;
 	opacity: 0.3;
 }
 .JWBpopup {
@@ -880,12 +958,13 @@ label[data-label="radio"] > input[type="radio"] {
 	z-index: 50;
 	top: 10%;
 	left: 20%;
+	box-sizing: border-box;
 	width: 60%;
 	height: 80%;
-	border: 2px solid #000000;
-	padding: 5px;
+	border: 2px solid #000;
+	padding: 1em;
 	overflow: auto;
-	background: #EEEEEE;
+	background: #eee;
 }
 @media only screen and (max-width: 950px) {
 	.JWBpopup {
@@ -893,20 +972,100 @@ label[data-label="radio"] > input[type="radio"] {
 		width: 80%;
 	}
 }
-#moreReplaces {
-	top: 2px;
-	left: 2px;
+.namespaceFilter { /* Formerly #ns-filter. */
+	/* position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 10px;
+	text-align: center;
+}
+.namespaceList {
+	overflow: auto;
+}
+.namespaceList > option {
+	box-sizing: border-box;
+	padding: 2px 4px;
+}
+.popupForm {
+	display: flex;
+	flex-direction: row-reverse;
+	/* padding-right: 195px; same as #ns-filter width + margin */
+	height: 100%;
+}
+[dir="rtl"] .popupForm {
+	margin-left: unset;
+	margin-right: 10px;
+}
+.popupFieldsets {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	margin-left: 10px;
+}
+.popupFieldsets > div:last-child {
+	padding: 1em 0;
+}
+.popupFieldset > legend > label {
+	cursor: pointer;
+}
+.inputFlex,
+.tripleCheckbox, .doubleCheckbox,
+.tripleRadio, .doubleRadio {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.tripleCheckboxCheckboxes, .doubleCheckboxCheckboxes,
+.tripleRadioRadios, .doubleRadioRadios {
+	display: flex;
+	width: 80%; /* Similar to #pagelistPopup input[type="text"]. */
+	justify-content: space-between;
+}
+textarea.replaceText,
+textarea.replaceWith,
+#smwquery {
+	margin: 2px 0;
+	box-sizing: content-box;
+	resize: none;
+	max-height: 30em;
+	height: 1.5em;
+	min-height: 1.5em;
+	max-width: 80%;
+	width: 80%;
+	min-width: 80%;
+	padding: 2px;
+	line-height: 1.5em;
+}
+
+#replacesPopup > .sticky {
+	display: flex;
+	justify-content: space-between;
+	top: 0;
+	left: 0;
+	margin: 0;
+}
+#replacesPopup > .sticky > button {
+	margin: 0;
 }
 #moreReplacesBorder {
-	border-bottom: 2px dashed #BBBBBB;
+	margin-top: 0.3em;
+	border-bottom: 2px dashed #bbb;
 	background-color: transparent;
+}
+#replacesPopup .replaces,
+#replacesPopup .fieldsetPlaceholder {
+	margin: 4px 0;
+	border: dashed #bbb;
+	padding-bottom: 4px;
 }
 #replacesPopup .replaces {
 	display: flex;
 	flex-direction: column;
-	margin-top: 4px;
-	margin-bottom: 5px;
-	border-bottom: 2px dashed #BBBBBB;
+	border-width: 0 0 2px;
 }
 #replacesPopup .replaces.sortable {
 	cursor: grab;
@@ -914,15 +1073,9 @@ label[data-label="radio"] > input[type="radio"] {
 #replacesPopup .replaces.sortable:active {
 	cursor: grabbing;
 }
-.fieldsetPlaceholder {
-	visibility: visible;
-	margin: 5px 0 4px;
-	border: 2px dashed #BBBBBB;
-	border-top: none;
-	height: 92px;
-}
-#replacesPopup .replaceText, #replacesPopup .replaceWith {
-	width: 80%;
+#replacesPopup .ui-sortable-placeholder { /* .fieldsetPlaceholder */
+	visibility: visible !important;
+	border-width: 0 2px 2px;
 }
 /* #replacesPopup .switches {
 	align-self: flex-end;
@@ -937,44 +1090,6 @@ label[data-label="radio"] > input[type="radio"] {
 	float: left;
 }
 
-#pagelistForm {
-	display: flex;
-	flex-direction: row-reverse;
-	position: relative;
-	padding-left: 5px;
-	/* padding-right: 195px; same as #ns-filter width + margin */
-}
-#namespaceFilter { /* Formerly #ns-filter. */
-	/* position: absolute;
-	right: 0;
-	top: 0;
-	bottom: 0; */
-	margin: 0 10px;
-	width: 175px;
-	text-align: center;
-}
-#namespaceList {
-	height: calc(100% - 20px); /* #ns-filter height - 20px label line-height. */
-	overflow: auto;
-}
-#pagelistFieldsets {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 3;
-}
-#pagelistPopup .inputFlex,
-#pagelistPopup .checkboxFlex,
-#pagelistPopup .radioFlex {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-#pagelistPopup .checkboxFlexCheckboxes,
-#pagelistPopup .radioFlexRadios {
-	display: flex;
-	width: 80%; /* Similar to #pagelistPopup input[type="text"]. */
-	justify-content: space-between;
-}
 #rnlimit {
 	text-align: right;
 }
@@ -985,10 +1100,7 @@ label[data-label="radio"] > input[type="radio"] {
 	display: block;
 }
 #smwquery {
-	height: 3em;
-	padding: 2px;
-	resize: vertical;
-	max-height: 500px;
+	min-height: 6em;
 }
 #pagelistLoader {
 	right: 9px;
