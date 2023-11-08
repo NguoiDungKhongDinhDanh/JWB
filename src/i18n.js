@@ -1,11 +1,3 @@
-/**
- * Internationalisation file for AutoWikiBrowser script
- * See https://en.wikipedia.org/wiki/User:Joeytje50/JWB.js for the full script, as well as licensing.
- * Licensed under GNU GPL 2. http://www.gnu.org/copyleft/gpl.html
- * 
- * For attribution: [[:wikipedia:User:Joeytje50/JWB.js/i18n.js]]
-**/
-
 if (!window.JWB || JWB === false) {
 	//Make JWB an object again to prevent errors later on. The onload function will re-delete this again.
 	window.JWB = {

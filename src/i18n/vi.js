@@ -1,9 +1,3 @@
-/**
- * Internationalisation file for AutoWikiBrowser script
- * See https://en.wikipedia.org/wiki/User:Joeytje50/JWB.js for the full script, as well as licensing.
- * Licensed under GNU GPL 2. http://www.gnu.org/copyleft/gpl.html
-**/
-
 JWB.messages.vi = {
 	// General interface
 	'tab-setup':				'DS',

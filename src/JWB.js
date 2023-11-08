@@ -1,29 +1,3 @@
-/* <nowiki> */
-/***************************************************************************
- * This script is based on the downloadable AutoWikiBrowser.
- * 
- * @licence
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * http://www.gnu.org/copyleft/gpl.html
- * 
- * Original author: [[:wikipedia:User:Joeytje50]]
- * 
- * For attribution: //en.wikipedia.org/wiki/User:Joeytje50/JWB.js
-***************************************************************************/
-/* jshint maxerr: 9999, undef: true, unused: true, quotmark: single */
-/* globals JWB: true, RETF: true, JWBSETTINGS: true, $: false, mw: false */
 /**
  * TODO:
  * * list=random [Done]
@@ -3594,5 +3568,3 @@ JWB.init = function() {
 // Disable JWB altogether when it's loaded on a page other than Project:AutoWikiBrowser/Script.
 // This script shouldn't be loaded on any other page in the first place.
 if (JWB.allowed === false) JWB = false;
-
-/* </nowiki> */
